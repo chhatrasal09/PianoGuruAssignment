@@ -2,6 +2,7 @@ package com.aplha.pianoguru;
 
 import android.media.MediaPlayer;
 import android.media.SoundPool;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -74,56 +75,17 @@ public class MainActivity extends AppCompatActivity {
                 mediaPlayer.release();
                 mediaPlayer = null;
             }
-            switch (tokens.get(position)) {
-                case "a1":
-                    mediaPlayer = MediaPlayer.create(getBaseContext(), R.raw.a1);
-                    break;
-                case "a1s":
-                    mediaPlayer = MediaPlayer.create(getBaseContext(), R.raw.a1s);
-                    break;
-                case "b1":
-                    mediaPlayer = MediaPlayer.create(getBaseContext(), R.raw.b1);
-                    break;
-                case "c1":
-                    mediaPlayer = MediaPlayer.create(getBaseContext(), R.raw.c1);
-                    break;
-                case "c1s":
-                    mediaPlayer = MediaPlayer.create(getBaseContext(), R.raw.c1s);
-                    break;
-                case "c2":
-                    mediaPlayer = MediaPlayer.create(getBaseContext(), R.raw.c2);
-                    break;
-                case "d1":
-                    mediaPlayer = MediaPlayer.create(getBaseContext(), R.raw.d1);
-                    break;
-                case "d1s":
-                    mediaPlayer = MediaPlayer.create(getBaseContext(), R.raw.d1s);
-                    break;
-                case "e1":
-                    mediaPlayer = MediaPlayer.create(getBaseContext(), R.raw.e1);
-                    break;
-                case "f1":
-                    mediaPlayer = MediaPlayer.create(getBaseContext(), R.raw.f1);
-                    break;
-                case "f1s":
-                    mediaPlayer = MediaPlayer.create(getBaseContext(), R.raw.f1s);
-                    break;
-                case "g1":
-                    mediaPlayer = MediaPlayer.create(getBaseContext(), R.raw.g1);
-                    break;
-                case "g1s":
-                    mediaPlayer = MediaPlayer.create(getBaseContext(), R.raw.g1s);
-                    break;
-                case ".":
-                    try {
-                        Thread.sleep(50);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    mediaPlayer = new MediaPlayer();
-                    break;
-                default:
-                    break;
+
+            if (tokens.get(position).contains(".")){
+                try {
+                    Thread.sleep(50);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                mediaPlayer = new MediaPlayer();
+            }else {
+                Uri uriPath = Uri.parse("android.resource://" + getPackageName() + "/" + "raw/" + tokens.get(position));
+                mediaPlayer = MediaPlayer.create(getBaseContext(),uriPath);
             }
             if (mediaPlayer != null) {
                 try {
